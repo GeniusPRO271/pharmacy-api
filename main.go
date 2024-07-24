@@ -2,6 +2,7 @@ package main
 
 import (
 	"pharmacy-api/database"
+	"pharmacy-api/prescription"
 	"pharmacy-api/user"
 
 	"github.com/gin-gonic/gin"
@@ -17,5 +18,13 @@ func main() {
 		UserService: userService,
 	}
 	userController.RegisterRoutes(router)
+
+	// init prescription
+	prescriptionService := prescription.PrescriptionServiceDependency{Db: db}
+	prescriptionController := prescription.Controller{
+		PrescriptionService: prescriptionService,
+	}
+	prescriptionController.RegisterRoutes(router)
+
 	router.Run()
 }
